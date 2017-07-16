@@ -1,0 +1,69 @@
+*************************************
+***********************************
+*************************************
+
+This is the updated one 
+
+
+Comparotor vs Comparable
+
+Comparator										Comparable
+1) Customized sorting order								1) Default natural sorting order.
+2)
+
+
+find the elements containing dell
+
+attribute = data-attribute 
+
+Data Driven Testing using cucumber:
+========================================
+
+Data Tables  ---------------   Large sets of data
+
+
+Scenario Outlines ---------- 
+	Examples
+
+
+Testiing Framework:
+=========================================
+
+To organize the code artifacts and control the test execution.
+
+Keyword driven: Keyword driven is nothing but the reusable methods in which we can pass the argmuments.
+		Driver class is the keyword in this.
+Data driven
+
+Hybrid: = Keyword driven and Data driven framework.
+		It will have different packages or components.
+==================================================================================================
+
+These are the components or packages of the Hybrid driven framework.
+
+	Reusable methods
+	Object Repository
+	Data sheets
+		- Test cases - All the names of the test cases are present. and also execute flag (it is a controller  .
+		- Test steps
+		- Test data
+	Driver Class- it is the heart of the framework 
+
+	Results - We will have the reports stored
+		html report
+		drill drown report
+	
+	Config file --  all the environmental details (config.properties)
+		url--
+		environments - (SIT, QA, UAT etc).
+			username:
+			password:
+			browser :
+
+In this framework we are having different components. We store all the objects in the object repositor, and we store the data sheets in three differnet sheets
+	Test cases: We write the high level description of the test cases
+	Test steps: We write the steps of the to perform the test cases
+	Test data : Here we write the data that is input for the test steps Eg: usernames, pwds etc.,
+
+
+
