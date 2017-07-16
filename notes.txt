@@ -1,0 +1,278 @@
+df -h ---- to check the size of the disk
+du -ah folder_name ----- to check the total space consumed by a particular folder.
+cd /etc/group -- to see all the created groups.
+cd /etc/passwd -- to see all the users.
+user/group format:  user_name:password:user_ID:grop_no
+usermod -g class user__name - to give primary groups to the user
+usermod -G class user__name - to give Secondary groups to the user
+useradd username- to create a new user
+useradd username -g class3 -G class1,class2 - it is for creating a user with the primary group as class3 and secondary groups as class1 and class2
+echo - is used for displaying
+ 
+Sudo-super user do
+apt-get is the command for installing any program
+man- is used for help
+q- for quit
+sudo apt-get install programe_name
+sudo apt-get remove programe_name
+
+
+
+Wordpress commands:
+Ec2-user
+Sudo su
+Yum update
+yum install httpd php php-mysql stress –y
+cd /etc/httpd/conf
+ls
+cp httpd.conf httpdconfbackup.conf
+vi httpd.conf – going into this we need to add permissions for all instead of none
+cd /var/www/html
+vi healthy.html
+ls
+healthy.html
+wget https://wordpress.org/latest.tar.gz - install wordpress
+After installing we need to untar the wordpress.
+Tar –xzf latest.tar.gz
+It by default creates a directory called wordpress and we only need the content of the wordpress. So copy the contents of the wordpress by
+Cp –r wordpress/* /var/www/html/
+We need to remove the wordpress and the installed tar file to minimize the space.
+rm -rf wordpress
+rm -rf latest.tar.gz
+Then in the list of items we have the wp-content folder. we need to change the permissions and the ownership for it.
+chmod -R 755 wp-content
+chown -R apache.apache wp-content
+chkconfig httpd on - to start the httpd.
+
+
+For creating a default web page in the EC2 instance.:
+Scenario: 
+	when we access the web server, it rediects us to a different web page. Ex: when we enter www.hdfcbank.com it redirects us to internet banking.
+This is possible because, the main DNS or the URL is located in the directory index in net banking folder and netbanking is also existed in the DocumentRoot.
+So the hdfc page directly loads the netbanking page.
+when we first click the URL it will first go to the web server and check for the DirectoryIndex, the specified file (page of code) (index.html, index.php etc), provided
+the file should be in the document root.
+
+sudo su
+yum install httpd -y
+cd /etc
+ls -la
+service httpd
+whichis and whereis are the commands to check the exact location of the command.
+service httpd status - to check whether the httpd is started or stopped.
+top - for cpu utilization
+ps -ef | grep -i http - to check the process
+ps -ef | grep -i http | grep -v grep - v = verbose, i= ignore case.
+service httpd start
+ps -ef | grep -i http | grep -v grep  - this shows whether http is started or not.
+pwd once we are in etc then
+ls -la
+cd httpd - in httpd conf is the most important file
+cd conf
+ls -la
+cd /etc/httpd
+ls -la
+cd conf - in this httpd.conf is the most important configuration file. in which the "root directory" and the "directory index" recides.
+now see the content of httpd.conf
+view httpd.conf - in this the important parameter that we need to check is documentroot.
+search for doc /Doc
+DocumentRoot "/var/www/html" - in httpd.conf "documentroot" is located in "/var/www/html"
+cd /var/www/html - we cannot see anything so we create a folder
+vi index.html - we are creating a file in the folder. - in this folder we can create any number of files like index.php etc
+Then go to the pulic DNS. We get the new html page rather than the default acache.
+If there is no maching of index.html in the document root and the directory index we will not get the page displayed.
+What ever we want to display in the webpage we need to have the same in the DirectoryIndex.
+To make some other page as default then go to
+cd /etc/httpd/conf
+vi httpd.conf- here check for the directory index, change in the DirectoryIndex- suppose html to php
+As we made changes we need to restart the service httpd restart
+
+
+
+
+
+
+Creating a volume and taking a snapshort and mounting, formating and unmounting and detaching.
+In the EC2 dashboard under compute go to volumes. Create a new volume same as the EC2 instance availability zone.
+Then attach the created volume to the instance. For detaching the volume in the actions itself select detach. When the volume is detached we can take a snapshot.
+From Putty:
+Connect to EC2 user and then take the privileges of root user.
+ec2-user
+sudo su
+lsblk - is the command to display all the volumes attached and related to the instance.
+file -s /dev/xvdf - to display the data from the directory
+mkfs -t ext4 /dev/xvdf (where /de/xvdf - is the name of the volume) - this is for formating the volume.
+mount /dev/xvdf /filename 
+umount /dev/xvdf 
+
+
+For mounting the newley attached volume.
+Before mounting it we are just creating directory in cd /
+mkdir file_name
+before mounting the volume it is best practice to check if there is any data inside the volume --- file -s /dev/xvdf
+
+
+
+Elastic IP's are assigned to the loadbalancers inorder to maintain the servers active irrespective of the instances shutting down, restarting.
+	When we shutdown or restart the servers it automatically changes the public ips and the public DNS. It is best practice to have EIP's for all the major
+	launces.
+
+Creating VPC:
+	Virtual Private Cloud (VPC). Creating a VPC in the console.
+We did created a VPC,We did created a Subnet, Routable and we have associated the public route table and launched a server with public VPC.
+
+Created a public VPC
+Created a Route Table
+Created a Subnet
+Subnet is associated to Route Table
+Created an Internet Gateway and attached to VPC, and updated the routes.
+Though the private subnet is using the NAT Gateway we need to use the public subnet while creating the NAT Gateway.
+After creating the NAT gateway we need to launch a new instance in the public VPC and Private subnet.
+
+
+Interview Questions:
+
+-Aws is a domain of cloud computing and is known as Iaas (Infrastructure as a service).
+-IAM is a web service which helps in securely connecting to the aws resources by the users.
+-AWS certificate Manager (ACM) handles the complexity of provisioning, deploying and managing cetrificates provided by the ACM. ACM certificates are currently
+applicable only for the ELB and Cloud Front Distribution and cannot be usfeul outside the AWS.
+-S3 is a pay as you use service. It is Simple Storage Service. It is used for storing any amount of data and can be retreived any time and from anywhere in the world.
+-AMI is amazon machine image provides information about the operating system, an application and the server) ..........................
+-From a single ami we can launch multiple instances.
+-Redshift is a fast, fully managed, petabyte-scale data warehouse serivce that makes it simple and cost effective to effectively analyze all your data using your
+data using your existing business intelligence tools.
+-Amazon EC2 is Elastic Cloude Computing, which provides scalable computing capacity in AWS cloud. It is helpul in avoiding investing in the hardware, as everything
+i.e. infrastructure being provided by AWS. With the help of EC2 we are able to make the server available to the customers according to the demand.
+-EC2 instance is a virtual server in Amazons EC2 for running applications on the AWS infrastructure.
+-EC2 provides-- virtual computing environments known as instances
+	     -- preconfigured templates for your instances known as Amazon Machine Images(AMI) that packages the bits you need for your server including OS and
+		other software packages.
+	     -- Vrious configurations of CPU, memory, storage and networking capacity for your instances.
+	     --	Secure login information by the use of key pairs.
+	     -- Instance store volumes used to store the temporary data thats deleted when you stop or terminate your instances.
+	     -- EBS volumes-Persistent storage volumes for your data uning amazon elastic block store. 
+	     -- A firewal that enables you to protect the instances to be reached from all the ip address and writing the protocols.
+	     -- Static IP addresses for dynamic cloud computing, known as Elastic Ip address.
+-In AWS we can create upto 100 buckets.
+- T2 instances are the low cost EC2 instances. This are suitable for small database usage, ideal for web servers and developer environments. there is a baseline set for
+	the instance, when the demand reaches the baseline and exceeds it can burst to the higher volumes.
+- C4 instances are ideal for compute-bound applications that beneift from high performance processor.
+- Buffer is used to make the system more robust to manage traffic or load by synchronizing different component. Usually, components receive and process the requests in
+	an unbalanced way. With the help of the buffer we can manage the receiving and processing of the requests in a balanced way, with no differnce in speed.
+- DynamoDB is a NoSql database that provides fast and predictable performance with seamless scalability.
+- Elasticache is a web service that makes it easy to setup, manage and scale distributed memory cache environments in the cloud.
+- AWS key management services is a managed service that makes it easy for us to create and control the encryption keys used to encrypt your dta.
+- AWS WAF is web application firewall that let us monitor the http and https requests that are forwarded to the cloudfront and lets you control access to your control.
+	we are benfited from protecting against web attacks using conditions that we specify. We can use the conditions for the many different applications.
+- Amazon Elastic Map Reduce is a managed cluster platform that simplifies running bigdata frameworks, such as apache hadoop, apache spark an aws to process and
+	analyze vast amounts of data. it is used to transform the large amounts of data into a different aws data stores like, s3 and dynamoDB. It is Paas.
+- Aws data pipeline is a web service that we can use to automate the movement and transformation of data. With AWS data pipeline, we can define data-driven workflows,
+	so that tasks can be dependent on the successful completion of previous tasks.
+- Amazon Kinesis firehose is a fully managed service for delivering real-time streaming data destinations such as s3 and redshift.
+- AWS regions and endpoints are used to reduce the transfer rate (latency) of the data.
+- ec2-describe-regions is the command to find the regions of the aws from cli.
+- Workmail is the managed email and calendering service.
+- 
+ticketing system - jira
+
+Configuration Management tools:
+
+Chef: It has a Master-Agent architecture. IN the master we need to install chef master and in the client we need to install chef client. In chef there is a 
+	workstation a chef server and all the other servers as chef-nodes. The code or the application that we want to deploy in all the nodes
+	manually is a lot of time consuming process. In order to deploy the code we need to deploy it in the chef server using the chef workstaion and this will
+	install the application or the code in the chef nodes. It is also highly available, in this it has a back up chef server. By chance if there is any issue with
+	the main checf server, the backup chef server will take incharge of the chef server. It follows the pull configuration.
+	Chef Server works only on Linux/Unix but the chef client and workstation can work on windows.
+ 
+Puppet: It has a master agent architecture. In puppet server we need to install puppet master, and in the client we need to install puppet agent. there is a
+	certificate signing between the master and the agent. It has multi-master architecture which is there are multiple masters, and if one master goes down, then,
+	the other master takes incharge or the position of the main master. It follows the pull configuration. It uses itsown language called "Puppet Domain Specific"
+	language. It is tough to understand. Puppet master works only on Linux/Unix and the agents can work on windows. Puppet do not execute the programs in top
+	down order instead they run on the basis of what is effecient. This order can be overwridden manually.
+	
+	Puppet Master server is Linux application. Communication between Puppet Master and the Puppet Node is through SSL over TCP/8140.
+Package resource type
+	
+Node decleration for managing a package:
+	Node defenition --- 			node 'appserver01' {
+	resource decleration			package { 'ntp':      package is type and ntp is title
+	attributes or the paaramerers		ensure => 'installed'        ------ this says that the ntp package is installed on appserver01
+						}
+ntp is used for uniquely identifying the resource to puppet.
+
+Node decleration for managing a file:
+						file {'/file_name.txt':
+	attribute					ensure => 'present'
+	this is the attribute that is helpful for 
+	
+
+
+
+Ansible: It is a Master-Node architechture. In this we need to install the Ansible in the Master machine or control machine and SSH connection with the nodes that
+	we want to connect. The main advantage of Ansible is there is no requirement for installing anything in the client machine. It follows the push configuration.
+	Ansible server works only on Linux/Unix and the ansible machines can work on windows.
+
+SaltStack: The server is called Salt master and the clients are called salt minions. It has muliple salt master, if the main salt master
+	breaks or gos down then the backup salt master will take care of salt minions. It follows the push configuration.
+	SaltStack master works only on Linux/Unix and the saltstack minions can work on windows.
+
+Push and Pull configuration:
+
+In push configuration, the code is in one central server. And this code needs to be pushed on to the multiple nodes or servers using commands by the central server.
+In pull configuration, the nodes or the servers will continously pull the central server for the configurations. And the client servers will automatically pull the 
+	configuration from the central server.
+
+SaltStack and Ansible are easy to learn and uses "YAML" language and it is like a simple english language.
+Puppet uses its own language called "Puppet Domain Specific Language", which is a little bit tough to learn. It is a kind of system oriented language.
+Chef uses Ruby, which is also a "Domain Specific Language (DSL)". 
+
+Interoperability of the tools: All the four tools main servers need to be on Linux/Unix and the nodes or the client servers can be on windows.
+
+
+Jenkins:
+	It is a "Continous Integration" tool. Integration or merging of the code was very difficult in the previous days. It is easy with the help of Jenkins.
+Now a days the code is built in bits and pieces. It is very easy for the tester to findout if there are any errors in the code. If there is any it is easy to fix
+error. CI helps in finding out the bugs in the code and CI does not fix the problems or bugs. As a part of CI we will test the product and deploying.
+In CI the best part of the Devops is that everyone is responsible for the work.
+
+
+
+
+
+
+
+
+
+naga- Breddy
+
+
+Nagir-Ang02
+
+
+
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
